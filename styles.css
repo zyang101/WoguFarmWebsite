@@ -752,6 +752,57 @@ h1 {
   color: var(--city-ink);
 }
 
+.city-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 46rem;
+  margin: 0;
+  border-top: 1px solid rgba(235, 230, 218, 0.16);
+  border-bottom: 1px solid rgba(235, 230, 218, 0.16);
+}
+
+.city-stats div {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 0.15rem;
+  padding: 1.25rem 1.25rem 1.25rem 0;
+}
+
+.city-stats div + div {
+  padding-left: 1.5rem;
+  border-left: 1px solid rgba(235, 230, 218, 0.16);
+}
+
+.city-stats dt {
+  color: rgba(235, 230, 218, 0.6);
+  font-size: 0.95rem;
+}
+
+.city-stats dd {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--city-ink);
+}
+
+.city-stats dd span {
+  margin: 0 0.15rem;
+  font-size: clamp(2.4rem, 4vw, 3.3rem);
+  line-height: 1.1;
+  color: #e2b5a4;
+}
+
+.source {
+  margin: 0.75rem 0 clamp(2.5rem, 5vw, 3.5rem);
+  font-size: 0.8rem;
+  color: rgba(235, 230, 218, 0.5);
+}
+
+.source a {
+  color: inherit;
+}
+
 .city figure figcaption {
   color: rgba(235, 230, 218, 0.6);
 }
@@ -925,6 +976,10 @@ h1 {
   gap: 2rem 2.5rem;
 }
 
+.stay-grid p + p {
+  margin-top: 0.75rem;
+}
+
 .stay-grid h3 {
   font-size: 1.7rem;
   margin-bottom: 0.7rem;
@@ -980,6 +1035,22 @@ h1 {
   color: var(--muted);
 }
 
+.getting-here {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem clamp(2rem, 5vw, 4rem);
+}
+
+.getting-here h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+}
+
+.getting-here .times {
+  grid-template-columns: 1fr;
+  max-width: none;
+}
+
 .tag {
   display: inline-block;
   margin-right: 0.6rem;
@@ -1028,6 +1099,7 @@ h1 {
   .side,
   .side.flip,
   .drafts,
+  .getting-here,
   .city-pair,
   .stay-grid,
   .times {
@@ -1118,6 +1190,16 @@ h1 {
   .visit {
     padding-left: var(--gutter);
     padding-right: var(--gutter);
+  }
+
+  .city-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .city-stats div + div {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid rgba(235, 230, 218, 0.16);
   }
 }
 
