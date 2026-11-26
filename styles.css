@@ -381,6 +381,86 @@ h1 {
   border-bottom: 1px solid var(--line);
 }
 
+.plan {
+  margin: 0 0 2rem;
+}
+
+.plan-frame {
+  position: relative;
+}
+
+.plan img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.zone {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(243, 239, 230, 0.92);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  line-height: 1.4;
+  box-shadow: 0 1px 4px rgba(28, 25, 22, 0.18);
+}
+
+.zone-stay { left: 47%; top: 20%; }
+.zone-eat { left: 56%; top: 25%; }
+.zone-park { left: 16%; top: 16%; }
+.zone-water { left: 84%; top: 40%; }
+
+.open-facts {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.wechat-id {
+  word-break: break-all;
+}
+
+.map-soon {
+  margin: 0;
+}
+
+.map-frame {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.35rem;
+  min-height: 16rem;
+  background:
+    linear-gradient(rgba(28, 25, 22, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(28, 25, 22, 0.04) 1px, transparent 1px),
+    #e7eee9;
+  background-size: 1.75rem 1.75rem, 1.75rem 1.75rem, auto;
+  text-align: center;
+}
+
+.map-frame p {
+  margin: 0;
+  max-width: 18em;
+}
+
+.map-frame p:first-child {
+  font-family: var(--serif);
+  font-size: 1.7rem;
+  color: var(--ink);
+}
+
+.map-soon figcaption {
+  margin-top: 0.75rem;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
 .offer h3 {
   font-size: 2.4rem;
   line-height: 1;
