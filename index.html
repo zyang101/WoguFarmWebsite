@@ -131,6 +131,61 @@
           <figcaption><span class="tag">实景</span>主楼、长廊和门前的池塘，水库在坡的右边。</figcaption>
         </figure>
       </div>
+      <div class="drafts">
+        <figure class="draft">
+          <img src="images/site-survey.jpg" width="1905" height="1068" alt="从空中看这块地，标出现有的树林、农田、建筑、水塘和三八水库" loading="lazy">
+          <figcaption><span class="tag">示意</span>二零二四年策划里的现状分析：树林、农田、两处建筑、水塘，三面是三八水库。</figcaption>
+        </figure>
+        <figure class="draft">
+          <img src="images/site-levels.jpg" width="1956" height="1622" alt="这块地的航拍上标着红色范围线和各处高程，最低约三百二十八米，最高约三百四十八米" loading="lazy">
+          <figcaption><span class="tag">示意</span>同一本策划里的高程图。红线是策划时画的范围，最低处到最高处相差近二十米。范围以权证为准。</figcaption>
+        </figure>
+      </div>
+      <p class="strip-lead">做策划时在现场拍的。</p>
+      <div class="strip" role="region" aria-label="这块地的现场照片">
+        <div class="strip-track" tabindex="0">
+          <figure>
+            <img src="images/site-ridge.jpg" width="830" height="509" alt="从空中看山脊，长廊顺着山脊走，两边都是水" loading="lazy">
+            <figcaption><span class="tag">实景</span>山脊和长廊，两边都是水。</figcaption>
+          </figure>
+          <figure>
+            <img src="images/site-reservoir.jpg" width="854" height="510" alt="三八水库开阔的一段，岸边是树和田" loading="lazy">
+            <figcaption><span class="tag">实景</span>三八水库开阔的一段。</figcaption>
+          </figure>
+          <figure>
+            <img src="images/site-fields.jpg" width="639" height="388" alt="从空中看坡上的田，长廊从中间穿过，坡下是池塘" loading="lazy">
+            <figcaption><span class="tag">实景</span>坡上的田，长廊从中间穿过。</figcaption>
+          </figure>
+          <figure>
+            <img src="images/site-fishpond.jpg" width="838" height="509" alt="鱼塘水面平静，岸边一座观景亭，远处是山和村子" loading="lazy">
+            <figcaption><span class="tag">实景</span>鱼塘和观景亭。</figcaption>
+          </figure>
+          <figure>
+            <img src="images/site-pond.jpg" width="834" height="509" alt="园里的水塘，中间有亭子和栈道" loading="lazy">
+            <figcaption><span class="tag">实景</span>园里的水塘和亭子。</figcaption>
+          </figure>
+          <figure>
+            <img src="images/site-corridor.jpg" width="830" height="509" alt="仿古长廊，灰瓦屋顶，两边是树" loading="lazy">
+            <figcaption><span class="tag">实景</span>仿古长廊。</figcaption>
+          </figure>
+          <figure>
+            <img src="images/site-nursery.jpg" width="834" height="509" alt="坡上一片红叶苗木，远处是山" loading="lazy">
+            <figcaption><span class="tag">实景</span>坡上的苗圃。</figcaption>
+          </figure>
+        </div>
+        <div class="strip-nav">
+          <button type="button" class="reel-arrow prev" aria-label="往前看">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M14.25 5.75 8 12l6.25 6.25" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button type="button" class="reel-arrow next" aria-label="往后看">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M9.75 5.75 16 12l-6.25 6.25" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
     </section>
 
     <figure class="bleed">
@@ -534,9 +589,7 @@
       queue();
     })();
 
-    (function () {
-      var strip = document.querySelector(".strip");
-      if (!strip) return;
+    Array.prototype.forEach.call(document.querySelectorAll(".strip"), function (strip) {
       var track = strip.querySelector(".strip-track");
       var prev = strip.querySelector(".reel-arrow.prev");
       var next = strip.querySelector(".reel-arrow.next");
@@ -561,7 +614,7 @@
       track.addEventListener("scroll", sync, { passive: true });
       window.addEventListener("resize", sync);
       sync();
-    })();
+    });
   </script>
 </body>
 </html>
