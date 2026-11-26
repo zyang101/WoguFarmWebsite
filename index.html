@@ -39,6 +39,22 @@
             <img src="images/aerial-slope.jpg" alt="主楼、池塘和长廊，坡下是水库">
             <img src="images/aerial-river.jpg" alt="水库从农庄旁边弯过去，四周是田和村子">
           </div>
+          <button type="button" class="reel-arrow prev" aria-label="上一张">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M14.25 5.75 8 12l6.25 6.25" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button type="button" class="reel-arrow next" aria-label="下一张">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M9.75 5.75 16 12l-6.25 6.25" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="reel-dots" role="tablist" aria-label="空中照片">
+            <button type="button" role="tab" aria-label="第一张" aria-selected="true" aria-current="true"></button>
+            <button type="button" role="tab" aria-label="第二张" aria-selected="false"></button>
+            <button type="button" role="tab" aria-label="第三张" aria-selected="false"></button>
+            <button type="button" role="tab" aria-label="第四张" aria-selected="false"></button>
+          </div>
         </div>
         <figcaption>从空中看，山脊伸进水库。</figcaption>
       </figure>
@@ -203,41 +219,132 @@
       var reel = document.querySelector(".reel");
       if (!reel) return;
       var track = reel.querySelector(".reel-track");
+      var dots = Array.prototype.slice.call(reel.querySelectorAll(".reel-dots button"));
       var slides = Array.prototype.slice.call(track.children);
       var count = slides.length;
       var index = 0;
+      var position = 1;
       var timer = null;
+      var snapTimer = null;
       var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (!count) return;
 
-      track.appendChild(slides[0].cloneNode(true));
+      var lead = slides[count - 1].cloneNode(true);
+      var tail = slides[0].cloneNode(true);
+      lead.alt = "";
+      tail.alt = "";
+      lead.setAttribute("aria-hidden", "true");
+      tail.setAttribute("aria-hidden", "true");
+      track.insertBefore(lead, track.firstChild);
+      track.appendChild(tail);
+
+      function paint() {
+        dots.forEach(function (dot, i) {
+          var on = i === index;
+          dot.setAttribute("aria-selected", on ? "true" : "false");
+          if (on) dot.setAttribute("aria-current", "true");
+          else dot.removeAttribute("aria-current");
+        });
+      }
+
+      function place(next, animate) {
+        clearTimeout(snapTimer);
+        track.style.transition = animate && !reduce ? "transform 700ms ease" : "none";
+        track.style.transform = "translate3d(" + (-next * reel.clientWidth) + "px,0,0)";
+        if (!animate || reduce) track.offsetHeight;
+        position = next;
+        if (next === count + 1 || next === 0) {
+          var settle = next === 0 ? count : 1;
+          snapTimer = setTimeout(function () {
+            track.style.transition = "none";
+            track.style.transform = "translate3d(" + (-settle * reel.clientWidth) + "px,0,0)";
+            track.offsetHeight;
+            position = settle;
+          }, 750);
+        }
+      }
+
+      function settleClone() {
+        if (position === count + 1) place(1, false);
+        else if (position === 0) place(count, false);
+      }
 
       function go(next, animate) {
-        track.style.transition = animate ? "transform 900ms ease" : "none";
-        if (!animate) track.offsetHeight;
-        track.style.transform = "translateX(" + (-next * 100) + "%)";
+        settleClone();
+        place(next + 1, animate);
         index = next;
+        paint();
+      }
+
+      function advance() {
+        if (index === count - 1) {
+          settleClone();
+          place(count + 1, true);
+          index = 0;
+          paint();
+        } else {
+          go(index + 1, true);
+        }
+      }
+
+      function retreat() {
+        if (index === 0) {
+          settleClone();
+          place(0, true);
+          index = count - 1;
+          paint();
+        } else {
+          go(index - 1, true);
+        }
       }
 
       function queue() {
         if (reduce) return;
-        clearInterval(timer);
-        timer = setInterval(function () {
-          go(index + 1, true);
-        }, 4200);
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          advance();
+          queue();
+        }, 2500);
       }
 
-      track.addEventListener("transitionend", function (event) {
-        if (event.target !== track || index !== count) return;
-        go(0, false);
+      dots.forEach(function (dot, i) {
+        dot.addEventListener("click", function () {
+          if (i === index && position > 0 && position <= count) {
+            queue();
+            return;
+          }
+          go(i, true);
+          queue();
+        });
       });
 
-      reel.addEventListener("mouseenter", function () { clearInterval(timer); });
+      reel.querySelector(".reel-arrow.prev").addEventListener("click", function () {
+        retreat();
+        queue();
+      });
+      reel.querySelector(".reel-arrow.next").addEventListener("click", function () {
+        advance();
+        queue();
+      });
+      reel.addEventListener("keydown", function (event) {
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        event.preventDefault();
+        if (event.key === "ArrowLeft") retreat();
+        else advance();
+        queue();
+      });
+
+      place(1, false);
+      window.addEventListener("resize", function () {
+        place(position, false);
+      });
+
+      reel.addEventListener("mouseenter", function () { clearTimeout(timer); });
       reel.addEventListener("mouseleave", queue);
-      reel.addEventListener("focusin", function () { clearInterval(timer); });
+      reel.addEventListener("focusin", function () { clearTimeout(timer); });
       reel.addEventListener("focusout", queue);
       document.addEventListener("visibilitychange", function () {
-        if (document.hidden) clearInterval(timer);
+        if (document.hidden) clearTimeout(timer);
         else queue();
       });
 

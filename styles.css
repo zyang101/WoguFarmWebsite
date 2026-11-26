@@ -183,6 +183,76 @@ h1 {
   object-position: center;
 }
 
+.reel-arrow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: rgba(243, 239, 230, 0.86);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.reel-arrow.prev {
+  left: 0.75rem;
+}
+
+.reel-arrow.next {
+  right: 0.75rem;
+}
+
+.reel-arrow svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.reel-arrow:hover {
+  background: var(--paper);
+}
+
+.reel-arrow:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.reel-dots {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 0.85rem;
+  display: flex;
+  gap: 0.42rem;
+  transform: translateX(-50%);
+}
+
+.reel-dots button {
+  width: 0.45rem;
+  height: 0.45rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(28, 25, 22, 0.35);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+}
+
+.reel-dots button[aria-current="true"] {
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(28, 25, 22, 0.2);
+}
+
+.reel-dots button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
 .ridge figcaption,
 .plate figcaption,
 .inline-photo figcaption {
@@ -439,6 +509,19 @@ h1 {
     height: auto;
     aspect-ratio: 16 / 10;
     margin-top: 1.75rem;
+  }
+
+  .reel-arrow {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .reel-arrow.prev {
+    left: 0.5rem;
+  }
+
+  .reel-arrow.next {
+    right: 0.5rem;
   }
 
   .ridge figcaption {
