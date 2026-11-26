@@ -163,12 +163,24 @@ h1 {
   margin: 0;
 }
 
-.ridge img {
-  display: block;
-  width: 100%;
+.reel {
+  position: relative;
+  overflow: hidden;
   height: min(68vh, 38rem);
+  background: #d7e3dc;
+}
+
+.reel-track {
+  display: flex;
+  height: 100%;
+}
+
+.reel-track img {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  object-position: center 42%;
+  object-position: center;
 }
 
 .ridge figcaption,
@@ -423,7 +435,7 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .ridge img {
+  .reel {
     height: auto;
     aspect-ratio: 16 / 10;
     margin-top: 1.75rem;

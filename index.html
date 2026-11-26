@@ -32,7 +32,14 @@
         <p class="quiet">看得到山水，听得到蛙鸣。</p>
       </div>
       <figure class="ridge">
-        <img src="images/aerial-water.jpg" alt="杨家沟的山脊伸进三八水库，北、南、西三面是水">
+        <div class="reel" aria-roledescription="carousel" aria-label="从空中看农庄">
+          <div class="reel-track">
+            <img src="images/aerial-peninsula.jpg" alt="山脊伸进三八水库，长廊和主楼在坡上">
+            <img src="images/aerial-overhead.jpg" alt="从上往下看，一道绿地三面是水">
+            <img src="images/aerial-slope.jpg" alt="主楼、池塘和长廊，坡下是水库">
+            <img src="images/aerial-river.jpg" alt="水库从农庄旁边弯过去，四周是田和村子">
+          </div>
+        </div>
         <figcaption>从空中看，山脊伸进水库。</figcaption>
       </figure>
       <ul class="facts" aria-label="此刻能确定的事">
@@ -191,5 +198,51 @@
     <p>沃谷农庄 · 阆中杨家沟 · 三八水库</p>
     <p>设计样稿。预约号码还没放上来。</p>
   </footer>
+  <script>
+    (function () {
+      var reel = document.querySelector(".reel");
+      if (!reel) return;
+      var track = reel.querySelector(".reel-track");
+      var slides = Array.prototype.slice.call(track.children);
+      var count = slides.length;
+      var index = 0;
+      var timer = null;
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!count) return;
+
+      track.appendChild(slides[0].cloneNode(true));
+
+      function go(next, animate) {
+        track.style.transition = animate ? "transform 900ms ease" : "none";
+        if (!animate) track.offsetHeight;
+        track.style.transform = "translateX(" + (-next * 100) + "%)";
+        index = next;
+      }
+
+      function queue() {
+        if (reduce) return;
+        clearInterval(timer);
+        timer = setInterval(function () {
+          go(index + 1, true);
+        }, 4200);
+      }
+
+      track.addEventListener("transitionend", function (event) {
+        if (event.target !== track || index !== count) return;
+        go(0, false);
+      });
+
+      reel.addEventListener("mouseenter", function () { clearInterval(timer); });
+      reel.addEventListener("mouseleave", queue);
+      reel.addEventListener("focusin", function () { clearInterval(timer); });
+      reel.addEventListener("focusout", queue);
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) clearInterval(timer);
+        else queue();
+      });
+
+      queue();
+    })();
+  </script>
 </body>
 </html>
