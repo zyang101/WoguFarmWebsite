@@ -102,15 +102,8 @@ h1, h2, h3, p {
   text-decoration: none;
 }
 
-.site-nav a:hover,
-.book:hover {
+.site-nav a:hover {
   text-decoration: underline;
-}
-
-.book {
-  font-family: var(--serif);
-  font-size: 1.15rem;
-  text-decoration: none;
 }
 
 .hero {
@@ -277,8 +270,10 @@ h1 {
 .inline-photo img {
   display: block;
   width: 100%;
+  aspect-ratio: 3 / 2;
   max-height: 78vh;
   object-fit: cover;
+  background: #d7e3dc;
 }
 
 .inline-photo {
